@@ -1,0 +1,17 @@
+{
+  "name": "inbox",
+  "version": "1.0.0",
+  "description": "Smart Contract Simulation",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "dr33k",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "ganache": "^7.9.2",
+    "mocha": "^11.0.1",
+    "solc": "^0.8.24",
+    "web3": "^4.16.0"
+  }
+}
