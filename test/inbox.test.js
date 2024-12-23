@@ -6,6 +6,7 @@ const inboxContract = require('../compile');
 const web3 = new Web3(ganache.provider());
 
 let accounts, inbox;
+const INIT_STRING = 'HI THERE';
 
 beforeEach(async ()=> {
     //Get a list of accounts
@@ -16,7 +17,7 @@ beforeEach(async ()=> {
     
     .deploy({
         data: inboxContract.evm.bytecode.object,
-        arguments: ['Hi There']
+        arguments: [INIT_STRING]
     })
 
     .send({
@@ -29,11 +30,26 @@ beforeEach(async ()=> {
 describe('Inbox', ()=>{
 
     it('deploys a contract', ()=>{
-       console.log(inbox);
+    //    console.log(inbox);
        assert.ok(inbox.options.address);
     });
 
     it('has a default message', async ()=>{
-        const message = await inbox.methods.message.call();
-    })
+        const message = await inbox.methods.message().call();
+        assert.equal(message, INIT_STRING)
+    });
+
+    it('can change the default message', async ()=> {
+        const newMessage = 'Bye There';
+
+        const hash = await inbox.methods.setMessage(newMessage).send({
+            from: accounts[1],
+            gas: '50000'
+        });
+
+        const message = await inbox.methods.message().call();
+        assert.equal(message, newMessage);
+
+        console.log('hash: %s', hash);
+    });
 });
