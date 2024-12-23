@@ -24,5 +24,5 @@ var input = {
 const compileres = JSON.parse(solc.compile(JSON.stringify(input)));
 
 console.log(compileres);
-module.exports = compileres.contracts['inbox.sol']
+module.exports = compileres.contracts['inbox.sol']['Inbox']
 
